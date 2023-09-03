@@ -1,10 +1,11 @@
-const { project, clients } = require('../sampleData.js')
+const { projects, clients } = require('../sampleData.js')
 
 const {
   GraphQLObjectType,
   GraphQLID,
   GraphQLString,
   GraphQLSchema,
+  GraphQLList,
 } = require('graphql')
 
 // Client Type
@@ -17,6 +18,22 @@ const ClientType = new GraphQLObjectType({
     phone: { type: GraphQLString },
   }),
 })
+// Project Type
+const ProjectType = new GraphQLObjectType({
+  name: 'Project',
+  fields: () => ({
+    id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    description: { type: GraphQLString },
+    status: { type: GraphQLString },
+    client: {
+      type: ClientType,
+      resolve(parent, args) {
+        return clients.find((client) => client.id === parent.clientId)
+      },
+    },
+  }),
+})
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -26,6 +43,25 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         return clients.find((client) => client.id === args.id)
+      },
+    },
+    clients: {
+      type: new GraphQLList(ClientType),
+      resolve(parent, args) {
+        return clients
+      },
+    },
+    project: {
+      type: ProjectType,
+      args: { id: { type: GraphQLID } },
+      resolve(parent, args) {
+        return projects.find((project) => project.id === args.id)
+      },
+    },
+    projects: {
+      type: new GraphQLList(ProjectType),
+      resolve(parent, args) {
+        return projects
       },
     },
   },
