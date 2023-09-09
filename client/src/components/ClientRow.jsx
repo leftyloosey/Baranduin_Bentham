@@ -4,10 +4,10 @@ import { DELETE_CLIENT } from '../mutations/clientMutations'
 import { GET_CLIENTS } from '../queries/clientQueries'
 
 const ClientRow = ({ client }) => {
-    const [deleteClient] = useMutation(DELETE_CLIENT, {
-        variables: { id: client.id },
-        refetchQueries: [{ query: GET_CLIENTS }]
-     // update(cache, { data: { deleteClient } }) {
+  const [deleteClient] = useMutation(DELETE_CLIENT, {
+    variables: { id: client.id },
+    refetchQueries: [{ query: GET_CLIENTS }],
+    // update(cache, { data: { deleteClient } }) {
     //   const { clients } = cache.readQuery({ query: GET_CLIENTS });
     //   cache.writeQuery({
     //     query: GET_CLIENTS,
@@ -16,8 +16,7 @@ const ClientRow = ({ client }) => {
     //     },
     //   });
     // },
-
-    })
+  })
 
   return (
     <tr>
