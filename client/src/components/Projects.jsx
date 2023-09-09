@@ -9,6 +9,8 @@ const Projects = () => {
     if (loading) return <Spinner />
     if (error) return <p>Something Went Wrong</p>
   
+    console.log(data)
+
     return (
       <>
         {data.projects.length > 0 ? (

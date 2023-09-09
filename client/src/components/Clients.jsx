@@ -9,8 +9,6 @@ const Clients = () => {
   if (loading) return <Spinner />
   if (error) return <p>Something Went Wrong</p>
 
-  console.log(data)
-
   return (<> {!loading && !error && (
     <table className='table table-hover mt-3'>
     <thead>
